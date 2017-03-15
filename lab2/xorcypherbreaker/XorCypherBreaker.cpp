@@ -15,7 +15,7 @@ std::string XorCypherBreaker(const std::vector<char> &cryptogram,
                              int key_length,
                              const std::vector<string> &dictionary) {
 
-
+// deszyfrowanie
     int j, k, number, znalezione, naj = 0;
     string decrypted_s;
     string key = "";
