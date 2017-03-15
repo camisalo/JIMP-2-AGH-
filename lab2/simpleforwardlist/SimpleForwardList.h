@@ -13,7 +13,6 @@ struct ForwardList //
 
 
 ForwardList *CreateNode(int value);
-
 void DestroyList(ForwardList *list);
 
 #endif //JIMP_EXERCISES_SIMPLEFORWARDLIST_H
