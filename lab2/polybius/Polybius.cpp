@@ -48,7 +48,6 @@ std::string PolybiusDecrypt(std::string crypted){
         a = std::stoi(k1);
         b = std::stoi(k2);
         decrypted += szachownica[a-1][b-1];
-
     }
     return decrypted;
 }
