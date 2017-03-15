@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char **argv){
-
+    // Próby z otwieraniem pliku do odczytu i zapisu (nie wiem gdzie jest katalog lokalny programu)
     ifstream myfile;
     myfile.open("plik-tekst.txt");
 

@@ -5,9 +5,8 @@
 #include "Polybius.h"
 
 #include <iostream>
-#include <string>
 #include <fstream>
-
+#include <algorithm>
 
 std::string PolybiusCrypt(std::string message) {
     char szachownica[][5] = {{'a','b','c','d','e'},
@@ -15,6 +14,8 @@ std::string PolybiusCrypt(std::string message) {
                              {'l','m','n','o','p'},
                              {'q','r','s','t','u'},
                              {'v','w','x','y','z'}};
+
+    std::transform(message.begin(), message.end(), message.begin(), ::tolower);
     std::string szyfr;
     for (int wyr=0; message.size() > wyr; ++wyr){
         for (int i=0; i<5; ++i){
