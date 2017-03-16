@@ -7,6 +7,7 @@
 #include <sstream>
 #include <regex>
 #include <cmath>
+#include <iostream>
 
 #include "MinimalTimeDifference.h"
 

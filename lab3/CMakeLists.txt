@@ -2,3 +2,4 @@ project(lab2)
 
 add_subdirectory_if_exists(smarttree)
 add_subdirectory_if_exists(tinytrl)
+add_subdirectory_if_exists(minimaltimedifference)
