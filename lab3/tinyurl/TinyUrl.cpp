@@ -13,6 +13,7 @@
 using std::cout;
 using std::endl;
 
+
 std::unique_ptr<TinyUrlCodec> Init() {
     std::unique_ptr<TinyUrlCodec> url = std::make_unique<TinyUrlCodec>();
     return url;
@@ -47,5 +48,8 @@ std::string Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec)
 
 std::string Decode(const std::unique_ptr<TinyUrlCodec> &codec, const std::string &hash) {
     cout << "LKDSHFKDHSAKFJHDSKLJSDHGKJSDHG" << endl;
+    std::string url;
 
+
+    return url;
 }
