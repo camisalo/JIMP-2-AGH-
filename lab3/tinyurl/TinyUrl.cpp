@@ -14,30 +14,38 @@ using std::cout;
 using std::endl;
 
 std::unique_ptr<TinyUrlCodec> Init() {
-
-
-    return 0;
+    std::unique_ptr<TinyUrlCodec> url = std::make_unique<TinyUrlCodec>();
+    return url;
 }
 
 void tinyurl::NextHash(std::array<char, 6> *state) {
+    std::string alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    std::array<char, 6> hash = *state;
+    int j, i = 5;
+    bool ok = false;
 
-    std::array<char, 6> *git;
-    *git = {'a', 'b', 'v', 'c', 'c', 'f'};
-
-
-    for (int i = 0; i < state->size(); ++i) {
-        cout << state + i << endl;
-
+    while (!ok) {
+        if (hash[i] == 'z') {
+            state->_M_elems[i] = alphabet[0];
+        } else {
+            j = 0;
+            while (state->_M_elems[i] != alphabet[j] && j < alphabet.size()) {
+                j++;
+            }
+            state->_M_elems[i] = alphabet[j + 1];
+            ok = true;
+        }
+        i--;
     }
-    cout << endl << state << endl;
 }
 
 std::string Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec) {
-
+    cout << "LKDSHFKDHSAKFJHDSKLJSDHGKJSDHG" << endl;
 
 }
 
 
 std::string Decode(const std::unique_ptr<TinyUrlCodec> &codec, const std::string &hash) {
+    cout << "LKDSHFKDHSAKFJHDSKLJSDHGKJSDHG" << endl;
 
 }

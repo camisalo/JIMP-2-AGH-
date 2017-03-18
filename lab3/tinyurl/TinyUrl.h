@@ -10,11 +10,14 @@
 #include <array>
 #include <memory>
 
+
 struct TinyUrlCodec {
-    std::array<char, 6> tinyurl;
+    std::string tinyurl;
+    std::string url;
 };
 
 namespace tinyurl {
+
 
     std::unique_ptr<TinyUrlCodec> Init();
 
