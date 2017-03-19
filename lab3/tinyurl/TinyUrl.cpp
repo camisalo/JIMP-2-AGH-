@@ -45,7 +45,7 @@ void tinyurl::NextHash(std::array<char, 6> *state) {
 
 std::string tinyurl::Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec) {
 
-    cout << endl  << endl << endl << url << endl;
+    cout << endl  << endl << codec << endl << url << endl;
 
 }
 

@@ -4,9 +4,12 @@
 #include <ostream>
 #include <string>
 #include <memory>
+#include <iostream>
 
 #include "SmartTree.h"
 
+using std::cout;
+using std::endl;
 
 std::unique_ptr<SmartTree> CreateLeaf(int value) {
 
