@@ -8,12 +8,16 @@
 #include <ostream>
 #include <string>
 #include <memory>
-
-struct SmartTree {
-
-};
-
 namespace datastructures {
+
+    struct SmartTree {
+        int value;
+        std::unique_ptr<SmartTree> right = nullptr;
+        std::unique_ptr<SmartTree> left = nullptr;
+        std::unique_ptr<SmartTree> root = nullptr;
+
+    };
+
 
     std::unique_ptr<SmartTree> CreateLeaf(int value);
 
@@ -28,6 +32,8 @@ namespace datastructures {
     std::string DumpTree(const std::unique_ptr<SmartTree> &tree);
 
     std::unique_ptr<SmartTree> RestoreTree(const std::string &tree);
+
+    std::string Print(const std::unique_ptr<SmartTree> &tree);
 
 }
 
