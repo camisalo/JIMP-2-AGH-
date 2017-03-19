@@ -15,9 +15,7 @@ namespace tinyurl {
 
     struct TinyUrlCodec {
         std::string url;
-        std::string tinyurl;
-        struct *tinyurl::TinyUrlCodec next;
-
+        std::string hash;
     };
 
 
