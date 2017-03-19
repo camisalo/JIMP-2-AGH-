@@ -15,11 +15,8 @@ using std::endl;
 using tinyurl::TinyUrlCodec;
 
 std::unique_ptr<TinyUrlCodec> tinyurl::Init() {
-    std::unique_ptr<TinyUrlCodec> url = std::make_unique<TinyUrlCodec>();
-
-    cout << endl << "Zalokowano pamiec dla TinyUrlCodec" << endl;
-    url->hash = "000000";
-    return url;
+    std::unique_ptr<TinyUrlCodec> codec = std::make_unique<TinyUrlCodec>();
+    return codec;
 }
 
 void tinyurl::NextHash(std::array<char, 6> *state) {
@@ -44,14 +41,11 @@ void tinyurl::NextHash(std::array<char, 6> *state) {
 }
 
 std::string tinyurl::Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec) {
-
-    cout << endl  << endl << codec << endl << url << endl;
-
+    (*codec)->url = url;
+    cout << (*codec)->url << endl;
+    return (*codec)->hash;
 }
 
-
 std::string tinyurl::Decode(const std::unique_ptr<TinyUrlCodec> &codec, const std::string &hash) {
-
-    codec->hash;
-
+    return codec->url;
 }

@@ -9,6 +9,7 @@
 #include <string>
 #include <array>
 #include <memory>
+#include <iostream>
 
 namespace tinyurl {
 
