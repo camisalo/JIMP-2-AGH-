@@ -64,6 +64,14 @@ std::string datastructures::Print(const std::unique_ptr<SmartTree> &tree) {
 }
 
 std::unique_ptr<SmartTree> datastructures::RestoreTree(const std::string &tree) {
+    int i = 0, j;
+    std::string number;
+    while (tree[i] = '[') {
+        i++;
+    }
 
+    while (tree[i] != '[' || tree[i] != ']') {
+
+    }
 }
 
