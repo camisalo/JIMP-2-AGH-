@@ -121,7 +121,6 @@ std::unique_ptr<SmartTree> datastructures::RestoreTree(const std::string &tree) 
             cout << "right = " << next_tree << endl;
             p->right = RestoreTree(next_tree);
         }
-
     }
     return p;
 }

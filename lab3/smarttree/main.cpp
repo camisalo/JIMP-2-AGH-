@@ -4,11 +4,20 @@
 #include <iostream>
 
 #include "SmartTree.h"
+using datastructures::SmartTree;
 
 int main() {
+    std::unique_ptr<SmartTree> root;
+    root = datastructures::CreateLeaf(99);
+    root = InsertLeftChild(move(root), datastructures::CreateLeaf(100));
+    root = InsertRightChild(move(root), datastructures::CreateLeaf(88));
+    root->left = InsertLeftChild(move(root->left), datastructures::CreateLeaf(1234));
+    root->left = InsertRightChild(move(root->left), datastructures::CreateLeaf(4321));
+    root->right = InsertLeftChild(move(root->right), datastructures::CreateLeaf(897));
+    root->right = InsertRightChild(move(root->right), datastructures::CreateLeaf(761));
 
-    auto tree = datastructures::RestoreTree("[99 [100 [1234 [none] [none]] [4321 [none] [none]]] "
-                                    "[88 [897 [none] [none]] [761 [none] [none]]]]");
-    std::cout << datastructures::DumpTree(tree);
+
+    std::string s = datastructures::DumpTree(root);
+    std::cout << s << std::endl;
     return 0;
 }
