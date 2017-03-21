@@ -6,7 +6,6 @@
 #include <string>
 #include <array>
 #include <memory>
-#include <iostream>
 
 #include "TinyUrl.h"
 
@@ -42,7 +41,6 @@ void tinyurl::NextHash(std::array<char, 6> *state) {
 
 std::string tinyurl::Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec) {
     (*codec)->url = url;
-    cout << (*codec)->url << endl;
     return (*codec)->hash;
 }
 
