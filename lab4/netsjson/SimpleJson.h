@@ -31,18 +31,16 @@ namespace nets {
 
         JsonValue(map<string, JsonValue> p);
 
-        ValueByName(string
-        name);
-
         ~JsonValue();
 
         string ToString();
 
-    private:
-        struct JsonValue {
-            string name;
+        std::experimental::optional<std::string> ValueByName(string name);
 
-        };
+    private:
+        string name;
+        string value;
+        JsonValue *Json = nullptr;
     };
 }
 
