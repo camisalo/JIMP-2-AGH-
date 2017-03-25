@@ -56,51 +56,57 @@ geometry::Square::Square() {
 }
 
 geometry::Square::Square(Point p1, Point p2, Point p3, Point p4) {
-    this->p1 = p1;
-    this->p2 = p2;
-    this->p3 = p3;
-    this->p4 = p4;
+    this->p[0] = p1;
+    this->p[1] = p2;
+    this->p[2] = p3;
+    this->p[3] = p4;
+
 }
 
 geometry::Square::~Square() {}
 
 double geometry::Square::Circumference() const {
-    double circumference = 0, length;
+    double circumference = 0, length = 0;
     int k = 0;
-    length = p1.Distance(p2);
+    length = this->p[0].Distance(this->p[1]);
     for (int j = 0; j < 3; ++j) {
         for (int i = j + 1; i < 4; ++i) {
-            if (length < p[j].Distance(p[i])) {
-                length = p[j].Distance(p[i]);
-                k = 0;
-                circumference = 0;
-            } else if (length == p[j].Distance(p[i])) {
+            cout << endl << "krok: j=" << j << " i=" << i << " odleglosc= " << this->p[j].Distance(this->p[i]) << endl;
+            if (length > this->p[j].Distance(this->p[i])) {
+                length = this->p[j].Distance(this->p[i]);
+                k = 1;
+                circumference = this->p[j].Distance(this->p[i]);
+                cout << "pierwsze" << endl;
+            } else if (length == this->p[j].Distance(this->p[i])) {
                 k++;
-                circumference += p[j].Distance(p[i]);
+                circumference += this->p[j].Distance(this->p[i]);
+                cout << "sumowanie: " << circumference << " dla k= " << k << endl;
             } else {
                 cout << k << "za dlugi odcinek" << endl;
             }
         }
     }
     if (k == 4) {
-        cout << endl << circumference << endl;
+
     } else {
         circumference = 0;
     }
-    cout << circumference << endl;
+    cout << "wynik circumference = " << circumference << endl;
     return circumference;
 }
 
 double geometry::Square::Area() const {
-    double Area = 0, length;
+    double area = 0, length = 0;
     int k = 0;
-    length = p[0].Distance(p[1]);
+    length = this->p[0].Distance(this->p[1]);
     for (int j = 0; j < 3; ++j) {
         for (int i = j + 1; i < 4; ++i) {
-            if (length < p[j].Distance(p[i])) {
-                length = p[j].Distance(p[i]);
-                k = 0;
-            } else if (length == p[j].Distance(p[i])) {
+            cout << endl << "krok: j=" << j << " i=" << i << " odleglosc= " << this->p[j].Distance(this->p[i]) << endl;
+            if (length > this->p[j].Distance(this->p[i])) {
+                length = this->p[j].Distance(this->p[i]);
+                k = 1;
+                cout << "pierwsze" << endl;
+            } else if (length == this->p[j].Distance(this->p[i])) {
                 k++;
             } else {
                 cout << k << "za dlugi odcinek" << endl;
@@ -108,11 +114,10 @@ double geometry::Square::Area() const {
         }
     }
     if (k == 4) {
-        Area = p[0].Distance(p[1]) * p[1].Distance(p[2]);
-        cout << endl << Area << endl;
+        area = length * length;
     } else {
-        Area = 0;
+        area = 0;
     }
-    cout << Area << endl;
-    return Area;
+    cout << "wynik area = " << area << endl;
+    return area;
 }
