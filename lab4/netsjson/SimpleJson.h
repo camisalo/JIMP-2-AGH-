@@ -25,7 +25,7 @@ namespace nets {
 
         JsonValue(string p);
 
-        JsonValue(vector<JsonValue> p);
+        JsonValue(vector<JsonValue> &p);
 
         JsonValue(JsonValue *p);
 
@@ -38,8 +38,8 @@ namespace nets {
         std::experimental::optional<std::string> ValueByName(string name);
 
     private:
-        string name;
-        string value;
+        std::vector<string> name;
+        std::vector<string> value;
         JsonValue *Json = nullptr;
     };
 }

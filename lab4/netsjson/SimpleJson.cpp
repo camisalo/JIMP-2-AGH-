@@ -17,30 +17,31 @@ using ::std::vector;
 namespace nets {
 
     JsonValue::JsonValue(int p) {
-        this->name = "value";
-        this->value = std::to_string(p);
+        this->name[0] = "value";
+        this->value[0] = std::to_string(p);
     }
 
     JsonValue::JsonValue(double p) {
-        this->name = "value";
-        this->value = std::to_string(p);
+        this->name[0] = "value";
+        this->value[0] = std::to_string(p);
     }
 
     JsonValue::JsonValue(bool p) {
-        this->name = "value";
-        this->value = std::to_string(p);
+        this->name[0] = "value";
+        this->value[0] = std::to_string(p);
     }
 
     JsonValue::JsonValue(string p) {
-
+        this->name[0] = "name";
+        this->value[0] = p;
     }
 
-    JsonValue::JsonValue(vector<JsonValue> p) {
+    JsonValue::JsonValue(vector<JsonValue> &p) {
 
     }
 
     JsonValue::JsonValue(JsonValue *p) {
-
+        this->Json = p;
     }
 
     JsonValue::JsonValue(map<string, JsonValue> p) {
