@@ -50,7 +50,7 @@ namespace nets {
 
     JsonValue::JsonValue(vector<JsonValue> p) {
         for (auto v:p) {
-
+            this->value.emplace_back(v);
         }
     }
 
