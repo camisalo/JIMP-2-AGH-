@@ -25,7 +25,7 @@ namespace nets {
 
         JsonValue(string p);
 
-        JsonValue(vector<JsonValue> &p);
+        JsonValue(vector<JsonValue> p);
 
         JsonValue(map<string, JsonValue> p);
 
@@ -38,7 +38,6 @@ namespace nets {
     private:
         std::vector<string> value;
         std::map<string, JsonValue> mapa;
-
     };
 }
 

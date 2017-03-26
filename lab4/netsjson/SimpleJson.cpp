@@ -22,20 +22,36 @@ namespace nets {
     }
 
     JsonValue::JsonValue(double p) {
-        this->value.emplace_back(std::to_string(p));
+        string a, b;
+        if (p == 0)
+            this->value.emplace_back("");
+        else {
+            a = std::to_string(p);
+            for (int i = 0; i < a.size(); ++i) {
+                if (a[i] != '0')
+                    b += a[i];
+            }
+        }
+        this->value.emplace_back(b);
     }
 
     JsonValue::JsonValue(bool p) {
-        this->value.emplace_back(std::to_string(p));
+        if (p)
+            this->value.emplace_back("true");
+        else
+            this->value.emplace_back("false");
     }
 
     JsonValue::JsonValue(string p) {
-        this->value.emplace_back(p);
+        string a;
+        a += "\"" + p + "\"";
+        this->value.emplace_back(a);
     }
 
-    JsonValue::JsonValue(vector<JsonValue> &p) {
+    JsonValue::JsonValue(vector<JsonValue> p) {
+        for (auto v:p) {
 
-
+        }
     }
 
     JsonValue::JsonValue(map<string, JsonValue> p) {
