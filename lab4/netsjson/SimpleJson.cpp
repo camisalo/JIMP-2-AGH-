@@ -13,49 +13,55 @@
 using ::nets::JsonValue;
 using ::std::string;
 using ::std::vector;
+using ::std::map;
 
 namespace nets {
 
     JsonValue::JsonValue(int p) {
-        this->name[0] = "value";
-        this->value[0] = std::to_string(p);
+        this->value.emplace_back(std::to_string(p));
     }
 
     JsonValue::JsonValue(double p) {
-        this->name[0] = "value";
-        this->value[0] = std::to_string(p);
+        this->value.emplace_back(std::to_string(p));
     }
 
     JsonValue::JsonValue(bool p) {
-        this->name[0] = "value";
-        this->value[0] = std::to_string(p);
+        this->value.emplace_back(std::to_string(p));
     }
 
     JsonValue::JsonValue(string p) {
-        this->name[0] = "name";
-        this->value[0] = p;
+        this->value.emplace_back(p);
     }
 
     JsonValue::JsonValue(vector<JsonValue> &p) {
 
-    }
 
-    JsonValue::JsonValue(JsonValue *p) {
-        this->Json = p;
     }
 
     JsonValue::JsonValue(map<string, JsonValue> p) {
-
+        for (auto n:p) {
+            this->mapa.emplace(n.first, n.second);
+        }
     }
 
     JsonValue::~JsonValue() {}
 
-    std::experimental::optional<std::string> JsonValue::ValueByName(string name) {
-
+    string JsonValue::ToString() const {
+        string out;
+        for (int i = 0; i < this->value.size(); ++i) {
+            if (value.size() == 1)
+                out += this->value[i];
+            else
+                out += " ," + this->value[i];
+        }
+        return out;
     }
 
-
-    string JsonValue::ToString() {
-
+    std::experimental::optional<JsonValue> JsonValue::ValueByName(string name) const {
+        string a;
+        int i = 0;
+        JsonValue k = this->mapa.find(name)->second;
+        return k;
     }
+
 }

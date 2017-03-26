@@ -27,20 +27,18 @@ namespace nets {
 
         JsonValue(vector<JsonValue> &p);
 
-        JsonValue(JsonValue *p);
-
         JsonValue(map<string, JsonValue> p);
 
         ~JsonValue();
 
-        string ToString();
+        string ToString() const;
 
-        std::experimental::optional<std::string> ValueByName(string name);
+        std::experimental::optional<JsonValue> ValueByName(string name) const;
 
     private:
-        std::vector<string> name;
         std::vector<string> value;
-        JsonValue *Json = nullptr;
+        std::map<string, JsonValue> mapa;
+
     };
 }
 
