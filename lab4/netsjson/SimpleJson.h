@@ -23,6 +23,8 @@ namespace nets {
 
         JsonValue(bool p);
 
+        JsonValue(const char p[]);
+
         JsonValue(string p);
 
         JsonValue(vector<JsonValue> p);
@@ -36,7 +38,7 @@ namespace nets {
         std::experimental::optional<JsonValue> ValueByName(string name) const;
 
     private:
-        std::vector<string> value;
+        std::string value;
         std::map<string, JsonValue> mapa;
     };
 }

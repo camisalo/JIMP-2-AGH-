@@ -17,7 +17,7 @@ using ::nets::JsonValue;
 using ::std::literals::operator ""s;
 
 int main() {
-
+    cout << "siema" << endl;
     vector<JsonValue> js{JsonValue{56.6}, JsonValue{45}, JsonValue{"abc"s}};
     map<string, JsonValue> obj_v{{"values", JsonValue{js}},
                                  {"name",   JsonValue{"Test name"}},
@@ -35,4 +35,5 @@ int main() {
     } else {
         cout << "is absent" << endl;
     }
+    cout << "siema" << endl;
 }
