@@ -14,6 +14,8 @@ using ::nets::JsonValue;
 using ::std::string;
 using ::std::vector;
 using ::std::map;
+using ::std::literals::operator ""s;
+
 
 namespace nets {
 
