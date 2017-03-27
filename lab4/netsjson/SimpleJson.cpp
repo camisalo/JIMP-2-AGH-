@@ -14,6 +14,7 @@ using ::nets::JsonValue;
 using ::std::string;
 using ::std::vector;
 using ::std::map;
+using ::std::literals::operator ""s;
 
 namespace nets {
 
@@ -49,10 +50,11 @@ namespace nets {
     }
 
     JsonValue::JsonValue(vector<JsonValue> p) {
-        for (auto v:p) {
-            this->value.emplace_back(v);
+        for (int i = 0; i < p.size(); ++i) {
+            this->value.emplace_back(p[i].value);
         }
     }
+
 
     JsonValue::JsonValue(map<string, JsonValue> p) {
         for (auto n:p) {
@@ -74,10 +76,8 @@ namespace nets {
     }
 
     std::experimental::optional<JsonValue> JsonValue::ValueByName(string name) const {
-        string a;
-        int i = 0;
-        JsonValue k = this->mapa.find(name)->second;
-        return k;
-    }
 
+        return std::experimental::make_optional(this->mapa.find(name)->second);
+
+    }
 }
