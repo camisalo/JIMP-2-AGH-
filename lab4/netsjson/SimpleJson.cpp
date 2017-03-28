@@ -54,13 +54,13 @@ namespace nets {
     }
 
 
-    JsonValue::JsonValue(string p) {
+    JsonValue::JsonValue(string &p) {
         string a;
         a += "\"" + p + "\"";
         this->value = a;
     }
 
-    JsonValue::JsonValue(vector<JsonValue> p) {
+    JsonValue::JsonValue(vector<JsonValue> &p) {
         string a;
         a += "[";
         for (int i = 0; i < p.size(); ++i) {
@@ -73,7 +73,7 @@ namespace nets {
         this->value = a;
     }
 
-    JsonValue::JsonValue(map<string, JsonValue> p) {
+    JsonValue::JsonValue(map<string, JsonValue> &p) {
         for (auto n:p) {
             this->mapa.emplace("\"" + n.first + "\"", n.second);
         }
@@ -86,9 +86,12 @@ namespace nets {
         return this->value;
     }
 
-    std::experimental::optional<JsonValue> JsonValue::ValueByName(string name) const {
-        JsonValue k = this->mapa.find(name)->second;
-        return std::experimental::make_optional(k);
+    std::experimental::optional<JsonValue> JsonValue::ValueByName(string &name) const {
+        std::map<string, JsonValue>::iterator k = this->mapa.find(name);
+        if (k != this->mapa.end())
+            return std::experimental::make_optional(mapa.find(name)->second);
+        else
+            return {};
     }
 
 }
