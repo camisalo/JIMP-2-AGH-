@@ -86,7 +86,7 @@ namespace nets {
         return this->value;
     }
 
-    std::experimental::optional<JsonValue> JsonValue::ValueByName(string &name) const {
+    std::experimental::optional<JsonValue> JsonValue::ValueByName(string name) const {
         std::map<string, JsonValue>::iterator k = this->mapa.find(name);
         if (k != this->mapa.end())
             return std::experimental::make_optional(mapa.find(name)->second);

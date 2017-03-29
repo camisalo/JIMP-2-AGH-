@@ -35,7 +35,7 @@ namespace nets {
 
         string ToString() const;
 
-        std::experimental::optional<JsonValue> ValueByName(string &name) const;
+        std::experimental::optional<JsonValue> ValueByName(string name) const;
 
     private:
         std::string value;
