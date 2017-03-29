@@ -15,7 +15,7 @@ namespace nets {
 
 
     View::View(string p) {
-        this->szablon = p;
+
     }
 
     View::~View() {}
