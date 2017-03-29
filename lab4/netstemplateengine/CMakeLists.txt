@@ -1,13 +1,13 @@
 
-project(netstemplateengine)
+project(simpletemplateengine)
 
-set(HEDEAR_FILES NetsTemplateEngine.h)
-set(SOURCE_FILES NetsTemplateEngine.cpp)
+set(HEDEAR_FILES SimpleTemplateEngine.h)
+set(SOURCE_FILES SimpleTemplateEngine.cpp)
 
-add_library(libnetstemplateengine STATIC ${SOURCE_FILES})
-target_include_directories(libnetstemplateengine PUBLIC .)
+add_library(libsimpletemplateengine STATIC ${SOURCE_FILES})
+target_include_directories(libsimpletemplateengine PUBLIC .)
 
-add_executable(netstemplateengine ${SOURCE_FILES} main.cpp)
+add_executable(simpletemplateengine ${SOURCE_FILES} main.cpp)
 
-target_link_libraries(netstemplateengine libnetstemplateengine)
+target_link_libraries(simpletemplateengine libsimpletemplateengine)
 

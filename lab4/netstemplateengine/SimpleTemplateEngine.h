@@ -5,14 +5,23 @@
 #ifndef JIMP_EXERCISES_SIMPLETEMPLATEENGINE_H
 #define JIMP_EXERCISES_SIMPLETEMPLATEENGINE_H
 
+#include <string>
+#include <unordered_map>
+#include <map>
+
+using std::string;
+
 namespace nets {
     class View {
-        View();
+    public:
+        View(string p);
 
         ~View();
 
-        std::string Render(const std::unordered_map <std::string, std::string> &model) const;
+        std::string Render(const std::unordered_map<std::string, std::string> &model) const;
 
+    private:
+        string szablon;
     };
 
 }
