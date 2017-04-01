@@ -19,7 +19,24 @@ namespace pool {
     class TextPool {
     public:
 
+        TextPool();
+
         TextPool(std::initializer_list<string> p);
+
+        //1. konstruktor kopiujący
+        TextPool(const TextPool &tex);
+
+        //2. konstruktor przenoszący
+        TextPool(TextPool &&tex);
+
+        //3. operator przypisania kopiujący
+        TextPool &operator=(const TextPool &tex);
+
+        //4. operator przypisania przenoszący
+        TextPool &operator=(TextPool &&tex);
+
+
+        ~TextPool();
 
         string_view Intern(const string_view p);
 
