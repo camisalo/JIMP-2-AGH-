@@ -19,31 +19,19 @@ namespace pool {
     TextPool::TextPool() {}
 
     TextPool::TextPool(std::initializer_list<string> p) {
-        bool exist;
-        for (auto v:p) {
-            exist = false;
-            for (auto k:this->pool) {
-                if (v == k) {
-                    exist = true;
-                }
-            }
-            if (!exist) {
-                this->pool.emplace_back(v);
-            }
-            std::cout << v << std::endl;
-        }
+        chunks.insert(p);
     }
 
     //konstruktor kopiujacy
     TextPool::TextPool(const TextPool &tex) {
-        for (auto v:tex.pool) {
-            pool.emplace_back(v);
+        for (auto v:tex.chunks) {
+            chunks.insert(v);
         }
     }
 
     //konstruktor przenoszący:
-    TextPool::TextPool(TextPool &&tex) : pool{nullptr} {
-        swap(pool, tex.pool);
+    TextPool::TextPool(TextPool &&tex) {
+        swap(chunks, tex.chunks);
     }
 
     //3. operator przypisania kopiujący
@@ -52,11 +40,10 @@ namespace pool {
             return *this;
         }
 
-        std::vector<string>().swap(pool);
+        chunks.clear();
 
-
-        for (auto v:tex.pool) {
-            pool.emplace_back(v);
+        for (auto v:tex.chunks) {
+            chunks.insert(v);
         }
     }
 
@@ -65,45 +52,26 @@ namespace pool {
         if (this == &tex) {
             return *this;
         }
-
-        std::vector<string>().swap(pool);
-
-        for (auto v:tex.pool) {
-            pool.emplace_back(v);
+        chunks.clear();
+        for (auto v:tex.chunks) {
+            chunks.insert(v);
         }
     }
 
-    TextPool::~TextPool() {
+    TextPool::~TextPool() {}
 
-    }
-
-    string_view TextPool::Intern(const string_view p) {
-        std::cout << p << std::endl;
-        string_view out;
-        bool ok = false;
-        for (auto v:this->pool) {
-            if (p == v) {
-                out = p;
-                ok = true;
-            }
+    string_view TextPool::Intern(const string &p) {
+        if (chunks.find(p) != chunks.end()) {
+            return *chunks.find(p);
+        } else {
+            chunks.insert(p);
+            return *chunks.find(p);
         }
-        if (!ok) {
-            this->pool.emplace_back(p);
-            out = this->pool.back();
-        }
-        return out;
-
     }
 
     size_t TextPool::StoredStringCount() const {
         size_t out;
-        out = this->pool.size();
-        for (auto v:this->pool) {
-            std::cout << v << "  ";
-        }
-        std::cout << out << std::endl;
+        out = chunks.size();
         return out;
     }
-
-
 }

@@ -6,10 +6,11 @@
 #define JIMP_EXERCISES_TEXTPOOL_H
 
 #include <string>
-#include <vector>
+#include <list>
 #include <initializer_list>
 #include <experimental/string_view>
 #include <set>
+#include <iostream>
 
 using ::std::experimental::string_view;
 using ::std::string;
@@ -38,13 +39,13 @@ namespace pool {
 
         ~TextPool();
 
-        string_view Intern(const string_view p);
+        string_view Intern(const string &p);
 
         size_t StoredStringCount() const;
 
 
     private:
-        std::vector<string> pool;
+        std::set<std::string> chunks;
 
 
     };
