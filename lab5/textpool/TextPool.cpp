@@ -39,9 +39,6 @@ namespace pool {
         if (this == &tex) {
             return *this;
         }
-
-        chunks.clear();
-
         for (auto v:tex.chunks) {
             chunks.insert(v);
         }
