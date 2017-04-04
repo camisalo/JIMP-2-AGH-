@@ -8,19 +8,37 @@
 #include <string>
 #include <complex>
 
-class Matrix {
-public:
+namespace algebra {
 
-    Matrix();
+    class Matrix {
+    public:
 
-    std::string print();
+        Matrix();
 
-    add(Matrix
-    a);
-private:
-    std::complex mat[][];
+        Matrix(const char *text);
 
-};
+        Matrix(const Matrix &tex);       //1. konstruktor kopiujący
+        ~Matrix();
 
 
+        std::string Print() const;
+
+
+        Add(const Matrix &p) const;
+
+        Sub(const Matrix &p) const;
+
+        Mul(const Matrix &p) const;
+
+
+        size_t Size() const;
+
+
+    private:
+        int rows, columns;
+        std::complex<double> **mat;
+
+    };
+
+}
 #endif //JIMP_EXERCISES_MATRIX_H
