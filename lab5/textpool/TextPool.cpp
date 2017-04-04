@@ -22,26 +22,9 @@ namespace pool {
         chunks.insert(p);
     }
 
-    //konstruktor kopiujacy
-    TextPool::TextPool(const TextPool &tex) {
-        for (auto v:tex.chunks) {
-            chunks.insert(v);
-        }
-    }
-
     //konstruktor przenoszący:
     TextPool::TextPool(TextPool &&tex) {
         swap(chunks, tex.chunks);
-    }
-
-    //3. operator przypisania kopiujący
-    TextPool &TextPool::operator=(const TextPool &tex) {
-        if (this == &tex) {
-            return *this;
-        }
-        for (auto v:tex.chunks) {
-            chunks.insert(v);
-        }
     }
 
     //4. operator przypisania przenoszący
@@ -55,7 +38,8 @@ namespace pool {
         }
     }
 
-    TextPool::~TextPool() {}
+    TextPool::~TextPool() {
+    }
 
     string_view TextPool::Intern(const string &p) {
         if (chunks.find(p) != chunks.end()) {

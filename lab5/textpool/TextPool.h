@@ -25,13 +25,13 @@ namespace pool {
         TextPool(std::initializer_list<string> p);
 
         //1. konstruktor kopiujący
-        TextPool(const TextPool &tex);
+        TextPool(const TextPool &tex) = delete;
 
         //2. konstruktor przenoszący
         TextPool(TextPool &&tex);
 
         //3. operator przypisania kopiujący
-        TextPool &operator=(const TextPool &tex);
+        TextPool &operator=(const TextPool &tex) = delete;
 
         //4. operator przypisania przenoszący
         TextPool &operator=(TextPool &&tex);
