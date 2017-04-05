@@ -35,6 +35,8 @@ namespace algebra {
 
         Matrix Mul(const Matrix &p) const;
 
+        Matrix Div(const Matrix &p) const;
+
         Matrix Pow(int power) const;
 
         std::string Print() const;
@@ -47,6 +49,5 @@ namespace algebra {
         std::complex<double> **mat;
 
     };
-
 }
 #endif //JIMP_EXERCISES_MATRIX_H
