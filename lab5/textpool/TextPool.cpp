@@ -15,7 +15,6 @@ using std::experimental::string_view;
 using std::string;
 
 namespace pool {
-
     TextPool::TextPool() {}
 
     TextPool::TextPool(std::initializer_list<string> p) {
