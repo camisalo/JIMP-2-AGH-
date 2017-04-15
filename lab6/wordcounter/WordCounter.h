@@ -11,25 +11,10 @@
 
 
 namespace datastructures {
-    class WordCounter {
-    public:
-        WordCounter();
-
-        WordCounter(std::initializer_list<Word> init);
-
-
-        DistinctWords() const;
-
-        TotalWords() const;
-
-    private:
-        std::vector<std::pair<Word, Counts>>;
-
-    };
-
     class Word {
     public:
-        Word();
+        Word(std::string init);
+
 
     private:
         std::string word;
@@ -41,6 +26,23 @@ namespace datastructures {
 
     private:
         int count;
+    };
+
+
+    class WordCounter {
+    public:
+        WordCounter();
+
+        WordCounter(std::initializer_list<Word> init);
+
+
+        int DistinctWords() const;
+
+        int TotalWords() const;
+
+    private:
+        std::vector<std::pair<Word, Counts>> contener;
+
     };
 }
 

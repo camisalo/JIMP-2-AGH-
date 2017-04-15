@@ -15,18 +15,16 @@ namespace datastructures {
     }
 
 
-    WordCounter::DistinctWords() const {
+    int WordCounter::DistinctWords() const {
 
     }
 
-    WordCounter::TotalWords() const {
+    int WordCounter::TotalWords() const {
 
     }
 
 
-    Word::Word() {
-
-    }
+    Word::Word(std::string init) : word{init} {}
 
 
     Counts::Counts() {
