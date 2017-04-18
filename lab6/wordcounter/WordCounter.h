@@ -32,9 +32,7 @@ namespace datastructures {
     std::ostream &operator<<(std::ostream &, Word &);
 
     bool operator==(const Word &L, const Word &R);
-
     bool operator>(const Word &L, const Word &R);
-
     bool operator<(const Word &L, const Word &R);
 
     ////////////////////////////////// --------  COUNTS ---- COUNTS ---- COUNTS --- /////////////////////////////
@@ -56,9 +54,7 @@ namespace datastructures {
 
     /////////// PRZEŁADOWANE OPERATORY //////////////////////////
     bool operator==(const Counts &L, const Counts &R);
-
     bool operator>(const Counts &L, const Counts &R);
-
     bool operator<(const Counts &L, const Counts &R);
 
     ////////////////////////////////// --------  WORDCOUNTER ---- WORDCOUNTER ---- WORDCOUNTER --- /////////////////////////////
@@ -69,9 +65,7 @@ namespace datastructures {
         WordCounter(std::initializer_list<Word> init);
 
         size_t DistinctWords() const;
-
         size_t TotalWords() const;
-
         std::set<Word> Words();
 
         Counts operator[](std::string word);
@@ -81,6 +75,5 @@ namespace datastructures {
 
     };
 }
-
 
 #endif //JIMP_EXERCISES_WORDCOUNTER_H

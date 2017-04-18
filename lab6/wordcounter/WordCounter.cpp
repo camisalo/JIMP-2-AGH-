@@ -13,19 +13,24 @@ namespace datastructures {
         bool ok;
         for (auto v:init) {
             ok = false;
+            std::vector<std::pair<Word, Counts>> temp;
             for (auto k:contener) {
+                temp.emplace_back(k);
+            }
+            contener.clear();
+            for (auto k:temp) {
                 if (k.first == v) {
-                    int poi = k.second.GetCount() + 1;
-                    Counts p = Counts(k.second.GetCount() + 1);
-                    k.second = p;
+                    contener.emplace_back(k.first, k.second.GetCount() + 1);
                     ok = true;
+                } else {
+                    contener.emplace_back(k.first, Counts());
                 }
             }
             if (!ok) {
                 std::pair<Word, Counts> p;
                 p.first = v;
                 p.second = Counts();
-                contener.push_back(p);
+                contener.emplace_back(p);
             }
         }
     }
@@ -53,7 +58,7 @@ namespace datastructures {
 
     Counts WordCounter::operator[](std::string word) {
         for (auto v:contener) {
-            if (word == v.first.GetWord());
+            if (word == v.first.GetWord())
             return v.second;
         }
         return Counts(0);
