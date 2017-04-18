@@ -5,9 +5,7 @@
 #include "WordCounter.h"
 
 namespace datastructures {
-
     ////////////////////////////////// --------  WORDCOUNTER ---- WORDCOUNTER ---- WORDCOUNTER --- /////////////////////////////
-
 
     WordCounter::WordCounter() {}
 
@@ -17,7 +15,9 @@ namespace datastructures {
             ok = false;
             for (auto k:contener) {
                 if (k.first == v) {
-                    ++k.second;
+                    int poi = k.second.GetCount() + 1;
+                    Counts p = Counts(k.second.GetCount() + 1);
+                    k.second = p;
                     ok = true;
                 }
             }
@@ -29,7 +29,6 @@ namespace datastructures {
             }
         }
     }
-
 
     size_t WordCounter::DistinctWords() const {
         return contener.size();
@@ -92,26 +91,23 @@ namespace datastructures {
         return (L.GetWord() > R.GetWord());
     }
 
-
     ////////////////////////////////// --------  COUNTS ---- COUNTS ---- COUNTS --- /////////////////////////////
-
 
     Counts::Counts() : count{1} {}
 
     Counts::Counts(int init) : count{init} {}
 
     int Counts::GetCount() const {
-        return count;
+        return this->count;
     }
 
     void Counts::SetCount(int set) {
-        count = set;
+        this->count = set;
     }
 
     Counts &Counts::operator++() {
-        ++count;
+        ++this->count;
     }
-
 
     bool operator==(const Counts &L, const Counts &R) {
         return (L.GetCount() == R.GetCount());
@@ -124,7 +120,4 @@ namespace datastructures {
     bool operator<(const Counts &L, const Counts &R) {
         return (L.GetCount() > R.GetCount());
     }
-
-
-
 }
