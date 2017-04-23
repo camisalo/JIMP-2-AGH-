@@ -31,6 +31,8 @@ public:
     void SetX(double x);
     void SetY(double y);
 
+    double distance(const Point &sPoint) const;
+
 protected:
     double x_, y_;
 };

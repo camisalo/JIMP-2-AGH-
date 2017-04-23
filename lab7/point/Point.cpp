@@ -34,6 +34,11 @@ void Point::SetY(double y) {
     y_ = y;
 }
 
+double Point::distance(const Point &sPoint) const {
+    return sqrt(pow(x_, 2) + pow(y_, 2));
+}
+
+
 ////////////////////////     POINT  3D    ///////////////////
 
 Point3d::Point3d(double x, double y, double z) : Point(x, y) {
