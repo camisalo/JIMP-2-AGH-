@@ -1,17 +1,11 @@
-#include "Point.h"//
-// Created by konrad on 06.04.17.
-//
+#include "Point.h"
+#include <iomanip>
+#include <iostream>
 
-/*
- * Zad 5
- * Konstruktory i destruktory wykonaja sie w kolejnosci:
- * Konstruktor Point
- * Konstruktor Point3d
- * Destruktor Point3d
- * Destruktor Point
- */
 using ::std::cout;
 using ::std::endl;
+using ::std::istream;
+using ::std::ws;
 
 ////////////////////////     POINT    ///////////////////
 
@@ -56,4 +50,38 @@ void Point3d::SetZ(double z) {
 
 double Point3d::distance(Point3d sPoint3d) {
     return sqrt(pow(x_, 2) + pow(y_, 2) + pow(z_, 2));
+}
+
+
+//Helper functions:
+void runtime_error(std::string text) {
+    std::cout << text << std::endl;
+}
+
+void CheckNextChar(char c, istream *is) {
+    int next_char = is->peek();
+    if (next_char != c) {
+        throw runtime_error("invalid character");
+    }
+    is->ignore();
+}
+
+void IgnoreWhitespace(istream *is) {
+    (*is) >> ws;
+}
+
+double ReadNumber(istream *is) {
+    double d;
+    (*is) >> d;
+    return d;
+}
+
+istream &operator>>(istream &input, Point &p) {
+    CheckNextChar('(', &input);
+    p.SetX(ReadNumber(&input));
+    CheckNextChar(',', &input);
+    IgnoreWhitespace(&input);
+    p.SetY(ReadNumber(&input));
+    CheckNextChar(')', &input);
+    return input;      // Umożliwia cin >> a >> b >> c;
 }
