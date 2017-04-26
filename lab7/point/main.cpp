@@ -17,7 +17,7 @@
  * Czyli została zwrócona odległość miedzy punktami na płaszczyźnie 2d.
  * Punkt2d(1,1) , Punkt3d(2,2,2) ------->  1,4121
  *
- * Zad 7
+ *
  *
  */
 
