@@ -49,6 +49,8 @@ namespace moviesubs {
 
         std::string CreateTime(int T1, int T2) const;
 
+        void CheckChar(char znak) const;
+
     };
 
     class DataValidationError : public std::runtime_error {

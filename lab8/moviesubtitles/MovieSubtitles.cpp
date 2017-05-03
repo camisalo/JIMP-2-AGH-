@@ -239,10 +239,12 @@ namespace moviesubs {
                     break;
             }
         }
+    }
 
 
-        std::string SubRipSubtitles::CreateTime(int T1, int T2) const {
+    std::string SubRipSubtitles::CreateTime(int T1, int T2) const {
             std::string message = "";
+        int hr, min, sec, msec;
             hr = T1 / 3600000;
             min = (T1 - (hr * 3600000)) / 60000;
             sec = (T1 - (hr * 3600000) - (min * 60000)) / 1000;
@@ -276,14 +278,52 @@ namespace moviesubs {
             }
 
             message += " --> ";
-            ////////////////////////////////////////////////
 
+        hr = T2 / 3600000;
+        min = (T2 - (hr * 3600000)) / 60000;
+        sec = (T2 - (hr * 3600000) - (min * 60000)) / 1000;
+        msec = T2 % 1000;
 
-
+        if (hr < 10) {
+            message += "0" + std::to_string(hr) + ":";
+        } else {
+            message += std::to_string(hr) + ":";
         }
+
+        if (min < 10) {
+            message += "0" + std::to_string(min) + ":";
+        } else {
+            message += std::to_string(min) + ":";
+        }
+
+        if (sec < 10) {
+            message += "0" + std::to_string(sec) + ",";
+
+        } else {
+            message += std::to_string(sec) + ",";
+        }
+
+        if (msec < 100) {
+            message += "0" + std::to_string(msec);
+        } else if (msec < 10) {
+            message += "00" + std::to_string(msec);
+        } else {
+            message += std::to_string(msec);
+        }
+        return message;
+
+
     }
 
-
-
+    void SubRipSubtitles::CheckChar(char znak) const {
+        std::string A = "0123456789";
+        bool ok = false;
+        for (int i = 0; i < 10; ++i) {
+            if (znak == A[i])
+                ok = true;
+        }
+        if (!ok)
+            throw InvalidSubtitleLineFormat();
+    }
 
 }
