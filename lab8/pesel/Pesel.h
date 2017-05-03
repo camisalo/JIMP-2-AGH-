@@ -13,13 +13,11 @@ namespace academia {
     class Pesel {
     public:
         Pesel(const std::string init);
-
     };
 
     class AcademiaDataValidationError : public std::runtime_error {
     public:
         AcademiaDataValidationError(std::string i);
-
     };
 
     class InvalidPeselChecksum : public AcademiaDataValidationError {
