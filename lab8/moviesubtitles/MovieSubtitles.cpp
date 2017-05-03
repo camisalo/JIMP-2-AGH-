@@ -59,16 +59,12 @@ namespace moviesubs {
                 }
                 if (std::stoi(start) > std::stoi(stop)) {
                     std::string excep;
-                    excep += "At line ";
-                    excep += l;
-                    excep += ": ";
                     int k = 0;
                     cout << excep << endl;
                     while (line[k] != '\0') {
                         excep += line[k];
                         k++;
                     }
-                    cout << excep << endl;
                     throw SubtitleEndBeforeStart(l, excep);
                 }
                 *out << (std::stoi(start) + frametomove) << "}{"

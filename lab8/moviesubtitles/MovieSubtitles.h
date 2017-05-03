@@ -55,7 +55,7 @@ namespace moviesubs {
 
     class DataValidationError : public std::runtime_error {
     public:
-        DataValidationError(const std::string inf = "something went wrong") : std::runtime_error(inf) {}
+        DataValidationError(const std::string inf = "something wrong") : std::runtime_error(inf) {}
     };
 
     class NegativeFrameAfterShift : public DataValidationError {
