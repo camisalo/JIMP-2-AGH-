@@ -20,7 +20,7 @@ namespace moviesubs {
     public:
         MovieSubtitles() {}
 
-        virtual void ShiftAllSubtitlesBy(int time, int framerate, stringstream *in,
+        virtual void ShiftAllSubtitlesBy(int time, int frame, stringstream *in,
                                          stringstream *out);
     };
 
@@ -29,10 +29,10 @@ namespace moviesubs {
     public:
         MicroDvdSubtitles() : MovieSubtitles() {}
 
-        void ShiftAllSubtitlesBy(int time, int framerate, stringstream *in,
+        void ShiftAllSubtitlesBy(int time, int frame, stringstream *in,
                                  stringstream *out) override;
 
-        void CheckInput(int time, int framerate);
+        void CheckInput(int time, int frame);
     };
 
 

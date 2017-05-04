@@ -7,11 +7,11 @@
 
 namespace moviesubs {
 
-    void MicroDvdSubtitles::CheckInput(int time, int framerate) {
+    void MicroDvdSubtitles::CheckInput(int time, int frame) {
         if (time < 0) {
             //wyjątek od danych wejsciowych
         }
-        if (framerate < 0) {
+        if (frame < 0) {
             //wyjątek od danych framerate
 
         }

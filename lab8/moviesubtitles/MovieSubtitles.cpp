@@ -8,9 +8,9 @@
 namespace moviesubs {
 
 
-    void MicroDvdSubtitles::ShiftAllSubtitlesBy(int time, int framerate, stringstream *in,
+    void MicroDvdSubtitles::ShiftAllSubtitlesBy(int time, int frame, stringstream *in,
                                                 stringstream *out) {
-        CheckInput(time, framerate);
+        CheckInput(time, frame);
 
 
     }
