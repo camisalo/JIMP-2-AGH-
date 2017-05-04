@@ -34,7 +34,7 @@ namespace moviesubs {
         virtual void ShiftAllSubtitlesBy(int timetomove, int framerate, std::stringstream *in,
                                          std::stringstream *out) const override;
 
-        void ChechLine(std::string line) const;
+        void CheckLine(std::string line) const;
 
     };
 

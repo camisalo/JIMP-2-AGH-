@@ -1,3 +1,5 @@
+
+
 //
 // Created by konrad on 01.05.17.
 //
@@ -37,7 +39,7 @@ namespace moviesubs {
                 check += line[h];
                 h++;
             }
-            this->ChechLine(check);
+            this->CheckLine(check);
 
 
             start = "";
@@ -77,30 +79,36 @@ namespace moviesubs {
         }
     }
 
-    void MicroDvdSubtitles::ChechLine(std::string line) const {
+    void MicroDvdSubtitles::CheckLine(std::string line) const {
         std::string frames, temp;
         int p = 0, l = 0, i = 0;
-        bool empty = true;
+        bool empty = true, invalidchar;
         std::string A = "0123456789";
         while (p < 2 && i < line.length()) {
             frames += line[i];
-            i++;
             if (line[i] == '}')
                 p++;
             else if (line[i] == '{')
                 l++;
+            i++;
         }
         if (l != 2 || p != 2)
             throw InvalidSubtitleLineFormat();
-        i = 0;
+        i = 1;
         temp = "";
-        while (line[i] != '}') {
-            empty = false;
-            for (int m = 0; m < 10; m++) {
-                if (line[i] != A[m])
+        for (int k = 0; k < 2; ++k) {
+            while (line[i] != '}') {
+                empty = false;
+                invalidchar = true;
+                for (int m = 0; m < 10; m++) {
+                    if (line[i] == A[m])
+                        invalidchar = false;
+                }
+                if (invalidchar)
                     throw InvalidSubtitleLineFormat();
+                i++;
             }
-            i++;
+            i += 2;
         }
         if (empty)
             throw InvalidSubtitleLineFormat();
