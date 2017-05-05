@@ -25,6 +25,9 @@ namespace moviesubs {
         if (timetomove < 0)
             throw NegativeFrameAfterShift();
 
+        if (framerate < 0)
+            throw std::invalid_argument("invalid argument");
+
 
         int frametomove = ((timetomove * framerate) / 1000);
         char line[300];
@@ -108,10 +111,11 @@ namespace moviesubs {
                     throw InvalidSubtitleLineFormat();
                 i++;
             }
+            if (empty)
+                throw InvalidSubtitleLineFormat();
+            empty = true;
             i += 2;
         }
-        if (empty)
-            throw InvalidSubtitleLineFormat();
     }
 
     SubRipSubtitles::SubRipSubtitles() : MovieSubtitles() {}
