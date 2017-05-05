@@ -149,7 +149,18 @@ namespace moviesubs {
 
             *out << '\n';
             i = 0;
-            in->getline(line, 300);
+
+            in->getline(line, 300); /////////  Linia z czasem
+
+            bool wrong = true;
+            std::string A = "0123456789";
+            for (int y = 0; y < 10; y++) {
+                if (line[0] == A[y])
+                    wrong = false;
+            }
+            if (wrong)
+                throw MissingTimeSpecification();
+
             for (int j = 0; j < 2; ++j) {
                 TIME = timetomove;
                 temp = "";
@@ -157,6 +168,8 @@ namespace moviesubs {
                     temp += line[i];
                     i++;
                 }
+                if (temp.length() != 2)
+                    throw InvalidSubtitleLineFormat();
                 TIME += std::stoi(temp) * 3600000;
                 temp = "";
                 i++;
@@ -165,6 +178,8 @@ namespace moviesubs {
                     temp += line[i];
                     i++;
                 }
+                if (temp.length() != 2)
+                    throw InvalidSubtitleLineFormat();
                 TIME += std::stoi(temp) * 60000;
                 temp = "";
                 i++;
@@ -173,14 +188,18 @@ namespace moviesubs {
                     temp += line[i];
                     i++;
                 }
+                if (temp.length() != 2)
+                    throw InvalidSubtitleLineFormat();
                 TIME += std::stoi(temp) * 1000;
                 temp = "";
                 i++;
 
-                while (line[i] != ' ') {
+                while (line[i] != ' ' && line[i] != '\0') {
                     temp += line[i];
                     i++;
                 }
+                if (temp.length() != 3)
+                    throw InvalidSubtitleLineFormat();
                 TIME += std::stoi(temp);
 
                 if (j == 0)
@@ -222,9 +241,15 @@ namespace moviesubs {
 
                 if (j == 0) {
                     *out << " --> ";
-                }
+                    int por = i + 5;
+                    temp = "";
+                    for (i; i < por; i++) {
+                        temp += line[i];
+                    }
+                    if (temp != " --> ")
+                        throw InvalidSubtitleLineFormat();
 
-                i += 5;
+                }
             }
             if (T1 > T2) {
                 message = CreateTime(T1, T2);
