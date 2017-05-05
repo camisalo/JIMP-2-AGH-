@@ -86,8 +86,8 @@ namespace moviesubs {
     };
 
     class OutOfOrderFrames : public DataValidationError {
+    public:
         OutOfOrderFrames() : DataValidationError("Missing order frames") {}
-
     };
 }
 

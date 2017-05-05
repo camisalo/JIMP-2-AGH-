@@ -127,18 +127,16 @@ namespace moviesubs {
                                               std::stringstream *in,
                                               std::stringstream *out) const {
 
-        if (timetomove < 0)
-            throw NegativeFrameAfterShift();
-
 
         int hr, min, sec, msec, TIME, T1, T2;
-        int lineNuber, i, k = 0;
+        int lineNuber = 0, i, k = 0;
         char line[300];
         std::string temp, number, message;
 
         while (in->getline(line, 300)) {
 
             i = 0;
+            lineNuber++;
             number = "";
             message = "";
             while (line[i] != '\0') {
@@ -146,6 +144,9 @@ namespace moviesubs {
                 *out << line[i];
                 i++;
             }
+            if (std::stoi(number) != lineNuber)
+                throw OutOfOrderFrames();
+
             *out << '\n';
             i = 0;
             in->getline(line, 300);
@@ -244,6 +245,11 @@ namespace moviesubs {
                     break;
             }
         }
+        if (timetomove < 0)
+            throw NegativeFrameAfterShift();
+
+        if (framerate < 0)
+            throw std::invalid_argument("invalid argument");
     }
 
 
