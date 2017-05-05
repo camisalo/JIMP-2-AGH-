@@ -159,7 +159,7 @@ namespace moviesubs {
                     wrong = false;
             }
             if (wrong)
-                throw MissingTimeSpecification();
+                throw InvalidSubtitleLineFormat();
 
             for (int j = 0; j < 2; ++j) {
                 TIME = timetomove;
