@@ -11,6 +11,7 @@
 #include <initializer_list>
 #include <list>
 #include <array>
+#include <memory>
 
 namespace academia {
 
@@ -36,33 +37,23 @@ namespace academia {
     public:
         Schedule() {}
 
-        void InsertScheduleItem(SchedulingItem k) {Item.emplace_back(k);}
+        void InsertScheduleItem(SchedulingItem k) { schedules.emplace_back(k); }
 
-        const Schedule OfTeacher(int teacherid);
-
+        Schedule &OfTeacher(int teacherid);
         const Schedule OfRoom(int room);
-
         const Schedule OfYear(int room);
-
         std::vector<int> AvailableTimeSlots(int room);
 
-
-        unsigned long Size() const { return Item.size();}
-        unsigned long CourseId() const { return  Item[0].CourseId();}
-        unsigned long TeacherId() const { return Item[0].TeacherId();}
-        unsigned long RoomId() const { return Item[0].RoomId();}
-        unsigned long TimeSlot() const { return Item[0].TimeSlot();}
-        unsigned long Year() const { return Item[0].Year();}
-
-
-
-        SchedulingItem * operator[](const int &i) {
-            SchedulingItem *POINTER = &Item[i];
-            return POINTER;
-        }
+        unsigned long Size() const { return schedules.size(); }
 
     private:
-        std::vector<SchedulingItem> Item;
+        std::vector<SchedulingItem> schedules;
     };
+
+    SchedulingItem operator[](const Schedule &S, const int &i) {
+        SchedulingItem POINTER = schedules[i];
+        return POINTER;
+    }
 }
+
 #endif //JIMP_EXERCISES_SCHEDULER_H

@@ -6,14 +6,14 @@
 
 namespace academia{
 
-    const Schedule Schedule::OfTeacher(int teacherid){
+    Schedule &Schedule::OfTeacher(int teacherid) {
         Schedule teacher;
-        for (auto v:Item){
-            if (v.TeacherId() == teacherid){
-                teacher.InsertScheduleItem(v);
+        for (int i = 0; i < schedules.size(); ++i) {
+            if (schedules[i].TeacherId() == teacherid) {
+                teacher.InsertScheduleItem(schedules[i]);
             }
         }
-        return teacher;
+        return this;
     }
 
     const Schedule Schedule::OfRoom(int room) {
