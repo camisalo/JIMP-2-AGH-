@@ -9,10 +9,9 @@
 #include <vector>
 #include <iostream>
 #include <vector>
-
+#include <sstream>
 
 namespace academia {
-
 
     class Serializable;
 
@@ -31,6 +30,8 @@ namespace academia {
         virtual void Header(const std::string &object_name) = 0;
         virtual void Footer(const std::string &object_name) = 0;
 
+        virtual void Separate(){(*out_)<<"";};
+
     protected:
         std::ostream *out_;
     };
@@ -46,7 +47,7 @@ namespace academia {
         void SerializableField(const std::string &field_name,
                                const Serializable &value) override;
         void ArrayField(const std::string &field_name,
-                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value) override;
+                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value)  {}
         void Header(const std::string &object_name) override;
         void Footer(const std::string &object_name) override;
     };
@@ -62,34 +63,19 @@ namespace academia {
         void BooleanField(const std::string &field_name, bool value) override;
         void SerializableField(const std::string &field_name, const Serializable &value) override;
         void ArrayField(const std::string &field_name,
-                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value) override;
+                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value) {}
         void Header(const std::string &object_name) override;
         void Footer(const std::string &object_name) override;
+
+        void Separate() override {(*out_) << ", ";};
+
     };
 
     class Serializable {
     public:
-        Serializable() {}
-
         virtual void Serialize(Serializer *a) = 0;
-
     };
 
-    class Building : public Serializable {
-    public:
-        Building(const int &id, const std::string &names,const std::vector<std::reference_wrapper<const Serializable>> room)
-                :
-                id_(id), name_(names) {
-            std::copy(room.begin(), room.end(), rooms_.begin());
-        };
-
-        void Serialize(Serializer *item) const;
-
-    private:
-        const int id_;
-        const std::string name_;
-        const std::vector<std::reference_wrapper<const Serializable>> rooms_;
-    };
 
 
     class Room : public Serializable {
@@ -100,13 +86,21 @@ namespace academia {
             CLASSROOM
         };
 
-        Room(int id, std::string name, Type ty) : id{id}, name{name}, type{ty} {}
+        Room(int id, std::string name, Room::Type ty) : id{id}, name{name}, type{ty} {}
 
         void Serialize(Serializer *out) override {
             out->Header("room");
-            out->IntegerField("room", 1);
-            out->StringField("room", name);
-            out->StringField("type", "a");
+            out->IntegerField("id", id);
+            out->Separate();
+            out->StringField("name", name);
+            out->Separate();
+            if (type == Type::COMPUTER_LAB)
+                out->StringField("type", "COMPUTER_LAB");
+            else if (type == Type::LECTURE_HALL)
+                out->StringField("type", "LECTURE_HALL");
+            else if (type == Type::CLASSROOM)
+                out->StringField("type", "CLASSROOM");
+
             out->Footer("room");
         }
 
@@ -114,6 +108,20 @@ namespace academia {
         std::string name;
         int id;
         Type type;
+    };
+
+    class Building : public Serializable {
+    public:
+        Building(const int &id,const std::string &names, std::vector<Room> room)
+                : id_(id), name_(names), rooms_{room} {
+        };
+
+        void Serialize(Serializer *out) override;
+
+    private:
+        int id_;
+        std::string name_;
+        std::vector<Room> rooms_;
     };
 
 }

@@ -1,3 +1,4 @@
+
 //
 // Created by mwypych on 04.05.17.
 //
@@ -18,9 +19,9 @@ using namespace std;
 using namespace std::literals;
 
 class XmlSerializerTest : public ::testing::Test, MemLeakTest {
- public:
-  stringstream out;
-  XmlSerializer serializer{&out};
+public:
+    stringstream out;
+    XmlSerializer serializer{&out};
 };
 
 TEST_F(XmlSerializerTest, SerializationOfSingleComputerLabRoom) {
@@ -61,8 +62,8 @@ TEST_F(XmlSerializerTest, SerializationOfBuildingWithSeveralRooms) {
   Building building {11, "C2", {r1, r2, r3}};
   EXPECT_NO_THROW(building.Serialize(&serializer));
   EXPECT_EQ("<building><id>11<\\id><name>C2<\\name><rooms>"
-                "<room><id>100167<\\id><name>429<\\name><type>LECTURE_HALL<\\type><\\room>"
-                "<room><id>100168<\\id><name>208<\\name><type>COMPUTER_LAB<\\type><\\room>"
-                "<room><id>100169<\\id><name>216<\\name><type>COMPUTER_LAB<\\type><\\room>"
-                "<\\rooms><\\building>"s, out.str());
+                    "<room><id>100167<\\id><name>429<\\name><type>LECTURE_HALL<\\type><\\room>"
+                    "<room><id>100168<\\id><name>208<\\name><type>COMPUTER_LAB<\\type><\\room>"
+                    "<room><id>100169<\\id><name>216<\\name><type>COMPUTER_LAB<\\type><\\room>"
+                    "<\\rooms><\\building>"s, out.str());
 }

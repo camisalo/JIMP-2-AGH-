@@ -18,9 +18,9 @@ using namespace std;
 using namespace std::literals;
 
 class JsonSerializerTest : public ::testing::Test, MemLeakTest {
- public:
-  stringstream out;
-  JsonSerializer serializer{&out};
+public:
+    stringstream out;
+    JsonSerializer serializer{&out};
 };
 
 TEST_F(JsonSerializerTest, SerializationOfSingleComputerLabRoom) {
@@ -52,7 +52,7 @@ TEST_F(JsonSerializerTest, SerializationOfBuildingWithSingleRoom) {
   Building building {11, "A0", {room}};
   EXPECT_NO_THROW(building.Serialize(&serializer));
   EXPECT_EQ("{\"id\": 11, \"name\": \"A0\", \"rooms\": ["
-                "{\"id\": 100167, \"name\": \"H-24\", \"type\": \"LECTURE_HALL\"}]}"s, out.str());
+                    "{\"id\": 100167, \"name\": \"H-24\", \"type\": \"LECTURE_HALL\"}]}"s, out.str());
 }
 
 TEST_F(JsonSerializerTest, SerializationOfBuildingWithSeveralRooms) {
@@ -62,7 +62,7 @@ TEST_F(JsonSerializerTest, SerializationOfBuildingWithSeveralRooms) {
   Building building {11, "C2", {r1, r2, r3}};
   EXPECT_NO_THROW(building.Serialize(&serializer));
   EXPECT_EQ("{\"id\": 11, \"name\": \"C2\", \"rooms\": ["
-                "{\"id\": 100167, \"name\": \"429\", \"type\": \"LECTURE_HALL\"}, "
-                "{\"id\": 100168, \"name\": \"208\", \"type\": \"COMPUTER_LAB\"}, "
-                "{\"id\": 100169, \"name\": \"216\", \"type\": \"COMPUTER_LAB\"}]}"s, out.str());
+                    "{\"id\": 100167, \"name\": \"429\", \"type\": \"LECTURE_HALL\"}, "
+                    "{\"id\": 100168, \"name\": \"208\", \"type\": \"COMPUTER_LAB\"}, "
+                    "{\"id\": 100169, \"name\": \"216\", \"type\": \"COMPUTER_LAB\"}]}"s, out.str());
 }
