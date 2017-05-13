@@ -43,7 +43,7 @@ namespace academia {
     }
 
     void XmlSerializer::Header(const std::string &object_name) {
-
+        *out_ << "<" << object_name << ">";
     }
 
     void XmlSerializer::Footer(const std::string &object_name) {

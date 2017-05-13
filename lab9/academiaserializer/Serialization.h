@@ -18,7 +18,7 @@ namespace academia {
 
     class Serializer {
     public:
-        Serializer(std::ostream *out) {}
+        Serializer(std::ostream *out) : out_{out} {}
 
         virtual void IntegerField(const std::string &field_name, int value) = 0;
         virtual void DoubleField(const std::string &field_name, double value) = 0;
@@ -40,21 +40,14 @@ namespace academia {
         XmlSerializer(std::ostream *out) : Serializer(out) {};
 
         void IntegerField(const std::string &field_name, int value) override;
-
         void DoubleField(const std::string &field_name, double value) override;
-
         void StringField(const std::string &field_name, const std::string &value) override;
-
         void BooleanField(const std::string &field_name, bool value) override;
-
         void SerializableField(const std::string &field_name,
                                const Serializable &value) override;
-
         void ArrayField(const std::string &field_name,
                         const std::vector<std::reference_wrapper<const academia::Serializable>> &value) override;
-
         void Header(const std::string &object_name) override;
-
         void Footer(const std::string &object_name) override;
     };
 
@@ -64,20 +57,13 @@ namespace academia {
         JsonSerializer(std::ostream *out) : Serializer(out) {};
 
         void IntegerField(const std::string &field_name, int value) override;
-
         void DoubleField(const std::string &field_name, double value) override;
-
         void StringField(const std::string &field_name, const std::string &value) override;
-
         void BooleanField(const std::string &field_name, bool value) override;
-
         void SerializableField(const std::string &field_name, const Serializable &value) override;
-
         void ArrayField(const std::string &field_name,
                         const std::vector<std::reference_wrapper<const academia::Serializable>> &value) override;
-
         void Header(const std::string &object_name) override;
-
         void Footer(const std::string &object_name) override;
     };
 
@@ -91,11 +77,10 @@ namespace academia {
 
     class Building : public Serializable {
     public:
-        Building(const int &id, const std::string &names, std::vector<std::reference_wrapper<const Serializable>> room)
+        Building(const int &id, const std::string &names,const std::vector<std::reference_wrapper<const Serializable>> room)
                 :
                 id_(id), name_(names) {
-            std::vector<std::reference_wrapper<Serializable>> v(room.begin(), room.end());
-            rooms_ = v;
+            std::copy(room.begin(), room.end(), rooms_.begin());
         };
 
         void Serialize(Serializer *item) const;
@@ -103,7 +88,7 @@ namespace academia {
     private:
         const int id_;
         const std::string name_;
-        std::vector<std::reference_wrapper<Serializable>> rooms_;
+        const std::vector<std::reference_wrapper<const Serializable>> rooms_;
     };
 
 
@@ -117,12 +102,12 @@ namespace academia {
 
         Room(int id, std::string name, Type ty) : id{id}, name{name}, type{ty} {}
 
-        void Serialize(Serializer *a) override {
-            a->Header("room");
-            a->IntegerField("room", 1);
-            a->StringField("room", name);
-            a->StringField("type", "a");
-            a->Footer("room");
+        void Serialize(Serializer *out) override {
+            out->Header("room");
+            out->IntegerField("room", 1);
+            out->StringField("room", name);
+            out->StringField("type", "a");
+            out->Footer("room");
         }
 
     private:
