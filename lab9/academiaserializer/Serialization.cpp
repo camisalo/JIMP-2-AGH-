@@ -7,7 +7,7 @@
 
 namespace academia {
 
-    void Room::Serialize(Serializer *out) {
+    void Room::Serialize(Serializer *out) const {
         out->Header("room");
         out->IntegerField("id", id);
         out->Separate();
@@ -23,16 +23,13 @@ namespace academia {
         out->Footer("room");
     }
 
-    void Building::Serialize(Serializer *out) {
+    void Building::Serialize(Serializer *out) const {
         out->Header("building");
         out->IntegerField("id", id_);
         out->Separate();
         out->StringField("name", name_);
         out->Separate();
-        out->Header("rooms");
         out->ArrayField("rooms",rooms_);
-        
-        out->Footer("rooms");
         out->Footer("building");
     }
 
@@ -60,7 +57,11 @@ namespace academia {
 
     void XmlSerializer::ArrayField(const std::string &field_name,
                                     const std::vector<std::reference_wrapper<const academia::Serializable>> &value) {
-
+        *out_ << "<" << field_name << ">";
+        for (auto v:value){
+            v.get().Serialize(this);
+        }
+        *out_ << "<\\" << field_name << ">";
     }
 
     void XmlSerializer::Header(const std::string &object_name) {
@@ -95,20 +96,23 @@ namespace academia {
 
     void JsonSerializer::ArrayField(const std::string &field_name,
                             const std::vector<std::reference_wrapper<const academia::Serializable>> &value) {
-        
+        *out_<<"\""<<field_name<<"\": [";
+        bool first=true;
+
+        for(const Serializable &v : value)
+        {
+            if(!first) *out_<<", ";
+            else first=false;
+            v.Serialize(this);
+        }
+        *out_<<"]";
     }
 
     void JsonSerializer::Header(const std::string &object_name) {
-        if(object_name == "building" or object_name == "room")
-            (*out_) << "{";
-        if(object_name == "rooms")
-            (*out_) << "\"rooms\": [";
+        (*out_) << "{";
     }
 
     void JsonSerializer::Footer(const std::string &object_name) {
-        if(object_name == "building" or object_name == "room")
-            (*out_) << "}";
-        if(object_name == "rooms")
-            (*out_) << "]";
+        (*out_) << "}";
     }
 }

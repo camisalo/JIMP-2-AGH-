@@ -10,6 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <functional>
 
 namespace academia {
 
@@ -73,7 +74,7 @@ namespace academia {
 
     class Serializable {
     public:
-        virtual void Serialize(Serializer *a) = 0;
+        virtual void Serialize(Serializer *a) const = 0;
     };
 
 
@@ -88,7 +89,8 @@ namespace academia {
 
         Room(int id, std::string name, Room::Type ty) : id{id}, name{name}, type{ty} {}
 
-        void Serialize(Serializer *out) override ;
+        void Serialize(Serializer *out) const override ;
+
 
     private:
         std::string name;
@@ -98,14 +100,15 @@ namespace academia {
 
     class Building : public Serializable {
     public:
-        Building(const int &id,const std::string &names, std::vector<const Serializable> room)
+        Building(const int &id,const std::string &names,
+                 std::initializer_list<std::reference_wrapper<const Serializable>> room)
                 : id_(id), name_(names) {
-            for (int i=0;i<room.size();++i){
-
+            for (auto v:room){
+                rooms_.emplace_back(std::ref(v));
             }
         };
 
-        void Serialize(Serializer *out) override;
+        void Serialize(Serializer *out) const override;
 
     private:
         int id_;
