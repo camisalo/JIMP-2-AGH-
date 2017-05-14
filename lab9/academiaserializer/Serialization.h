@@ -47,7 +47,7 @@ namespace academia {
         void SerializableField(const std::string &field_name,
                                const Serializable &value) override;
         void ArrayField(const std::string &field_name,
-                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value)  {}
+                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value) override;
         void Header(const std::string &object_name) override;
         void Footer(const std::string &object_name) override;
     };
@@ -63,7 +63,7 @@ namespace academia {
         void BooleanField(const std::string &field_name, bool value) override;
         void SerializableField(const std::string &field_name, const Serializable &value) override;
         void ArrayField(const std::string &field_name,
-                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value) {}
+                        const std::vector<std::reference_wrapper<const academia::Serializable>> &value) override;
         void Header(const std::string &object_name) override;
         void Footer(const std::string &object_name) override;
 
@@ -88,21 +88,7 @@ namespace academia {
 
         Room(int id, std::string name, Room::Type ty) : id{id}, name{name}, type{ty} {}
 
-        void Serialize(Serializer *out) override {
-            out->Header("room");
-            out->IntegerField("id", id);
-            out->Separate();
-            out->StringField("name", name);
-            out->Separate();
-            if (type == Type::COMPUTER_LAB)
-                out->StringField("type", "COMPUTER_LAB");
-            else if (type == Type::LECTURE_HALL)
-                out->StringField("type", "LECTURE_HALL");
-            else if (type == Type::CLASSROOM)
-                out->StringField("type", "CLASSROOM");
-
-            out->Footer("room");
-        }
+        void Serialize(Serializer *out) override ;
 
     private:
         std::string name;
@@ -112,8 +98,11 @@ namespace academia {
 
     class Building : public Serializable {
     public:
-        Building(const int &id,const std::string &names, std::vector<Room> room)
-                : id_(id), name_(names), rooms_{room} {
+        Building(const int &id,const std::string &names, std::vector<const Serializable> room)
+                : id_(id), name_(names) {
+            for (int i=0;i<room.size();++i){
+
+            }
         };
 
         void Serialize(Serializer *out) override;
@@ -121,9 +110,28 @@ namespace academia {
     private:
         int id_;
         std::string name_;
-        std::vector<Room> rooms_;
+        std::vector<std::reference_wrapper<const Serializable>> rooms_;
     };
 
+
+    class BuildingRepository {
+    public:
+        BuildingRepository() {}
+        BuildingRepository(Building build){
+            build_.emplace_back(build);
+        }
+
+        void StoreAll(Serializer *out) {
+
+        }
+
+        void Add(Building build){
+
+        }
+
+    private:
+        std::vector<Building> build_;
+    };
 }
 
 #endif //JIMP_EXERCISES_SERIALIZATION_H

@@ -7,6 +7,22 @@
 
 namespace academia {
 
+    void Room::Serialize(Serializer *out) {
+        out->Header("room");
+        out->IntegerField("id", id);
+        out->Separate();
+        out->StringField("name", name);
+        out->Separate();
+        if (type == Type::COMPUTER_LAB)
+            out->StringField("type", "COMPUTER_LAB");
+        else if (type == Type::LECTURE_HALL)
+            out->StringField("type", "LECTURE_HALL");
+        else if (type == Type::CLASSROOM)
+            out->StringField("type", "CLASSROOM");
+
+        out->Footer("room");
+    }
+
     void Building::Serialize(Serializer *out) {
         out->Header("building");
         out->IntegerField("id", id_);
@@ -14,11 +30,8 @@ namespace academia {
         out->StringField("name", name_);
         out->Separate();
         out->Header("rooms");
-        for (int i=0; i<rooms_.size();++i) {
-            rooms_[i].Serialize(out);
-            if(i!=rooms_.size()-1)
-                out->Separate();
-        }
+        out->ArrayField("rooms",rooms_);
+        
         out->Footer("rooms");
         out->Footer("building");
     }
@@ -42,6 +55,11 @@ namespace academia {
     }
 
     void XmlSerializer::SerializableField(const std::string &field_name, const Serializable &value) {
+
+    }
+
+    void XmlSerializer::ArrayField(const std::string &field_name,
+                                    const std::vector<std::reference_wrapper<const academia::Serializable>> &value) {
 
     }
 
@@ -75,17 +93,22 @@ namespace academia {
 
     }
 
+    void JsonSerializer::ArrayField(const std::string &field_name,
+                            const std::vector<std::reference_wrapper<const academia::Serializable>> &value) {
+        
+    }
+
     void JsonSerializer::Header(const std::string &object_name) {
-        if(object_name=="building" or object_name == "room")
+        if(object_name == "building" or object_name == "room")
             (*out_) << "{";
-        if(object_name=="rooms")
+        if(object_name == "rooms")
             (*out_) << "\"rooms\": [";
     }
 
     void JsonSerializer::Footer(const std::string &object_name) {
-        if(object_name=="building" or object_name == "room")
+        if(object_name == "building" or object_name == "room")
             (*out_) << "}";
-        if(object_name=="rooms")
+        if(object_name == "rooms")
             (*out_) << "]";
     }
 }
