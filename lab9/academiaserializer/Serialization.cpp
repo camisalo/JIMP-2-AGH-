@@ -31,7 +31,7 @@ namespace academia {
         out->Separate();
         std::vector<std::reference_wrapper<const Serializable>> rooms;
         for (auto v:rooms_){
-            rooms.emplace_back(std::ref(v));
+            rooms.emplace_back(v);
         }
                 
         out->ArrayField("rooms",rooms);
