@@ -29,7 +29,12 @@ namespace academia {
         out->Separate();
         out->StringField("name", name_);
         out->Separate();
-        out->ArrayField("rooms",rooms_);
+        std::vector<std::reference_wrapper<const Serializable>> rooms;
+        for (auto v:rooms_){
+            rooms.emplace_back(std::ref(v));
+        }
+                
+        out->ArrayField("rooms",rooms);
         out->Footer("building");
     }
 

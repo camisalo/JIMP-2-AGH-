@@ -117,25 +117,7 @@ namespace academia {
     };
 
 
-    class BuildingRepository {
-    public:
-        BuildingRepository() {}
 
-        BuildingRepository(std::initializer_list<std::reference_wrapper<const Serialzer building){
-            build_.emplace_back(std::ref(building));
-        }
-
-        void StoreAll(Serializer *out) {
-
-        }
-
-        void Add(Building build){
-
-        }
-
-    private:
-        std::vector<std::reference_wrapper<const Serializable>> build_;
-    };
 }
 
 #endif //JIMP_EXERCISES_SERIALIZATION_H
