@@ -64,5 +64,6 @@ namespace academia {
     private:
         std::vector<SchedulingItem> schedule_item;
     };
+
 }
 #endif //JIMP_EXERCISES_SCHEDULER_H

@@ -37,6 +37,7 @@ namespace academia{
 
     }
 
+
     std::vector<int> Schedule::AvailableTimeSlots(int room) {
         std::vector<int> i;
 
