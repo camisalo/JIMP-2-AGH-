@@ -17,18 +17,24 @@ namespace academia {
 
     class SchedulingItem {
     public:
-        SchedulingItem(std::initializer_list<unsigned long> it) {
-            std::copy(it.begin(),it.end(),item.begin());
-        }
+        SchedulingItem(int course, int teacher, int room, int time, int year):
+                course_id_{course}, teacher_id_{teacher}, room_id_{room},
+                time_id_{time}, year_{year}   {    }
 
-        unsigned long CourseId() const { return  item[0];}
-        unsigned long TeacherId() const { return item[1];}
-        unsigned long RoomId() const { return item[2];}
-        unsigned long TimeSlot() const { return item[3];}
-        unsigned long Year() const { return item[4];}
+
+
+        unsigned long CourseId() const { return  course_id_;}
+        unsigned long TeacherId() const { return teacher_id_;}
+        unsigned long RoomId() const { return room_id_;}
+        unsigned long TimeSlot() const { return time_id_;}
+        unsigned long Year() const { return year_;}
 
     private:
-        std::vector<unsigned long> item;
+        unsigned long course_id_;
+        unsigned long teacher_id_;
+        unsigned long room_id_;
+        unsigned long time_id_;
+        unsigned long year_;
     };
 
 
@@ -36,33 +42,27 @@ namespace academia {
     public:
         Schedule() {}
 
-        void InsertScheduleItem(SchedulingItem k) {Item.emplace_back(k);}
+        Schedule(std::vector<SchedulingItem> init) : schedule_item{init}{}
 
-        const Schedule OfTeacher(int teacherid);
+        void InsertScheduleItem(SchedulingItem k) {schedule_item.emplace_back(k);}
 
-        const Schedule OfRoom(int room);
+        Schedule OfTeacher(int teacherid) const;
 
-        const Schedule OfYear(int room);
+        Schedule OfRoom(int room) const;
+
+        Schedule OfYear(int room) const;
 
         std::vector<int> AvailableTimeSlots(int room);
 
-
-        unsigned long Size() const { return Item.size();}
-        unsigned long CourseId() const { return  Item[0].CourseId();}
-        unsigned long TeacherId() const { return Item[0].TeacherId();}
-        unsigned long RoomId() const { return Item[0].RoomId();}
-        unsigned long TimeSlot() const { return Item[0].TimeSlot();}
-        unsigned long Year() const { return Item[0].Year();}
+        size_t Size() const {return schedule_item.size();}
 
 
-
-        SchedulingItem * operator[](const int &i) {
-            SchedulingItem *POINTER = &Item[i];
-            return POINTER;
+        SchedulingItem operator[](const int &number) const {
+            return schedule_item[number];
         }
 
     private:
-        std::vector<SchedulingItem> Item;
+        std::vector<SchedulingItem> schedule_item;
     };
 }
 #endif //JIMP_EXERCISES_SCHEDULER_H

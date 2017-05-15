@@ -6,23 +6,35 @@
 
 namespace academia{
 
-    const Schedule Schedule::OfTeacher(int teacherid){
-        Schedule teacher;
-        for (auto v:Item){
-            if (v.TeacherId() == teacherid){
-                teacher.InsertScheduleItem(v);
+    Schedule Schedule::OfTeacher(int teacher_id) const{
+        std::vector<SchedulingItem> teacher_classes;
+        for (const auto &current_item : schedule_item) {
+            if (current_item.TeacherId() == teacher_id) {
+                teacher_classes.emplace_back(current_item);
             }
         }
-        return teacher;
+        return Schedule(teacher_classes);
     }
 
-    const Schedule Schedule::OfRoom(int room) {
-        return Schedule();
+    Schedule Schedule::OfRoom(int room_id) const {
+        std::vector<SchedulingItem> room_classes;
+        for (const auto &current_item : schedule_item) {
+            if (current_item.RoomId() == room_id) {
+                room_classes.emplace_back(current_item);
+            }
+        }
+        return Schedule(room_classes);
     }
 
-    const Schedule Schedule::OfYear(int room) {
+    Schedule Schedule::OfYear(int year_id) const {
+        std::vector<SchedulingItem> year_classes;
+        for (const auto &current_item : schedule_item) {
+            if (current_item.Year() == year_id) {
+                year_classes.emplace_back(current_item);
+            }
+        }
+        return Schedule(year_classes);
 
-        return Schedule();
     }
 
     std::vector<int> Schedule::AvailableTimeSlots(int room) {
