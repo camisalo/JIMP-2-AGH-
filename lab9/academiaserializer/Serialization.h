@@ -11,7 +11,6 @@
 #include <vector>
 #include <sstream>
 #include <functional>
-#include <experimental>
 
 namespace academia {
 
@@ -121,8 +120,9 @@ namespace academia {
     class BuildingRepository {
     public:
         BuildingRepository() {}
-        BuildingRepository(Building build){
-            build_.emplace_back(build);
+
+        BuildingRepository(std::initializer_list<std::reference_wrapper<const Serialzer building){
+            build_.emplace_back(std::ref(building));
         }
 
         void StoreAll(Serializer *out) {
@@ -134,7 +134,7 @@ namespace academia {
         }
 
     private:
-        std::vector<Building> build_;
+        std::vector<std::reference_wrapper<const Serializable>> build_;
     };
 }
 
