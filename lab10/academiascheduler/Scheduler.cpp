@@ -34,15 +34,20 @@ namespace academia{
             }
         }
         return Schedule(year_classes);
-
     }
 
 
     std::vector<int> Schedule::AvailableTimeSlots(int room) {
-        std::vector<int> i;
-
-        return i;
+        std::vector<int> avaliable; bool ok;
+        for (int i=1;i<=room;i++) {
+            ok = true;
+            for (auto current_item:schedule_item) {
+                if (current_item.TimeSlot() == i)
+                    ok = false;
+            }
+            if (ok)
+                avaliable.emplace_back(i);
+        }
+        return avaliable;
     }
-
-
 }
