@@ -37,9 +37,9 @@ namespace academia{
     }
 
 
-    std::vector<int> Schedule::AvailableTimeSlots(int room) const {
+    std::vector<int> Schedule::AvailableTimeSlots(int time) const {
         std::vector<int> avaliable; bool ok;
-        for (int i=1;i<=room;i++) {
+        for (int i=1;i<=time;i++) {
             ok = true;
             for (auto current_item:schedule_item) {
                 if (current_item.TimeSlot() == i)
@@ -51,6 +51,9 @@ namespace academia{
         return avaliable;
     }
 
+
+
+
     Schedule GreedyScheduler::PrepareNewSchedule(const std::vector<int> &rooms,
                                                  const std::map<int, std::vector<int>> &teacher_courses_assignment,
                                                  const std::map<int, std::set<int>> &courses_of_year,
@@ -58,39 +61,49 @@ namespace academia{
         std::map<int, std::set<int>> avaiable_rooms_int_time;
         //  connect rooms with time slots
         std::set<int> avaiable_slots;   FillTimeSlots(avaiable_rooms_int_time, rooms, n_time_slots);
-        CreateBusyTeacher(teacher_courses_assignment,n_time_slots);
 
         Schedule new_schedule;
         int course_id, teacher_id, room_id, time_id, year;
+
+
+
 
         for (auto &courses_year : courses_of_year){
             year = courses_year.first;
             for (auto course : courses_year.second){
                 course_id = course;
-                teacher_id = GetTeacher(teacher_courses_assignment, course);
-                std::pair<int,int> room_time = FindRoomAndTimeSlot(avaiable_rooms_int_time, teacher_id);
+                teacher_id = GetTeacher(teacher_courses_assignment,course);
 
+                bool ok, error = true;
 
+                const Schedule &teacher = new_schedule.OfTeacher(teacher_id);
+                for (auto room : rooms){
 
+                    for (auto avaiable_time : new_schedule.OfRoom(room).AvailableTimeSlots(n_time_slots)){
+                        ok = true;
+                        for (int i=0;i<teacher.Size();++i){
+                            if (teacher[i].TimeSlot() == avaiable_time){
+                                ok = false;
+                            }
+                        }
+                        if (ok && error){
+                            time_id = avaiable_time;
+                            room_id = room;
+                            error = false;
+                        }
 
-                if (avaiable_slots.empty())
+                    }
+                }
+                if (error) {
                     throw NoViableSolutionFound();
+                }
 
-
-
-
-                new_schedule.InsertScheduleItem ({course_id,teacher_id,room_id,time_id,year});
+                new_schedule.InsertScheduleItem({course_id,teacher_id,room_id,time_id,year});
             }
-
-
-
-
-
-
         }
 
 
-        return Schedule();
+        return new_schedule;
     }
 
 
@@ -106,12 +119,6 @@ namespace academia{
         }
     }
 
-    void GreedyScheduler::CreateBusyTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment,int n_time_slots){
-        std::vector<bool> v_bool; std::fill_n(v_bool.begin(),n_time_slots,true);
-        for (auto teacher : teacher_courses_assignment) {
-            busy_teacher.emplace(teacher.first, v_bool);
-        }
-    }
 
     int GreedyScheduler::GetTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment, int course) const {
         for (auto teacher : teacher_courses_assignment){
@@ -122,24 +129,5 @@ namespace academia{
         }
         throw NoViableSolutionFound();
     }
-
-    std::pair<int,int> GreedyScheduler::FindRoomAndTimeSlot( std::map<int, std::set<int>> avaiable_rooms_int_time,
-                                            int teacher_id) const{
-        int found_time, found_room;
-        for (auto room : avaiable_rooms_int_time){
-            for (auto time : room.second){
-                if (CheckIsTeacherFree(teacher_id,time)) {
-
-                }
-                room.second.erase(time);
-            }
-        }
-        return std::make_pair(found_room, found_time) ;
-    };
-
-    bool GreedyScheduler::CheckIsTeacherFree(int teacher_id, int time){
-        busy_teacher.find(teacher_id);
-    }
-
 
 }

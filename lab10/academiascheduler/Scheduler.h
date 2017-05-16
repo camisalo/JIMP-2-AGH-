@@ -52,7 +52,7 @@ namespace academia {
         Schedule OfTeacher(int teacherid) const;
         Schedule OfRoom(int room_id) const;
         Schedule OfYear(int year_id) const;
-        std::vector<int> AvailableTimeSlots(int room) const;
+        std::vector<int> AvailableTimeSlots(int time) const;
         size_t Size() const {return schedule_item.size();}
 
         SchedulingItem operator[](const int &number) const { return schedule_item[number]; }
@@ -80,18 +80,10 @@ namespace academia {
 
         void FillTimeSlots(std::map<int,std::set<int>> &avaiable_rooms_in_time,
                            const std::vector<int> &rooms,int n_time_slots) const;
-        void CreateBusyTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment,int n_time_slots);
+
 
         int GetTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment, int course) const;
 
-        std::pair<int,int> FindRoomAndTimeSlot( std::map<int, std::set<int>> avaiable_rooms_int_time,
-                                                            int teacher_id) const;
-
-        bool CheckIsTeacherFree(int teacher_id, int time);
-
-
-    private:
-        std::map<int,std::vector<bool>> busy_teacher;
     };
 
     class NoViableSolutionFound {
