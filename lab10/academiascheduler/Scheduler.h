@@ -11,6 +11,12 @@
 #include <initializer_list>
 #include <list>
 #include <array>
+#include <map>
+#include <utility>
+#include <set>
+#include <iostream>
+
+
 
 namespace academia {
 
@@ -21,20 +27,18 @@ namespace academia {
                 course_id_{course}, teacher_id_{teacher}, room_id_{room},
                 time_id_{time}, year_{year}   {    }
 
-
-
-        unsigned long CourseId() const { return  course_id_;}
-        unsigned long TeacherId() const { return teacher_id_;}
-        unsigned long RoomId() const { return room_id_;}
-        unsigned long TimeSlot() const { return time_id_;}
-        unsigned long Year() const { return year_;}
+        int CourseId() const { return  course_id_;}
+        int TeacherId() const { return teacher_id_;}
+        int RoomId() const { return room_id_;}
+        int TimeSlot() const { return time_id_;}
+        int Year() const { return year_;}
 
     private:
-        unsigned long course_id_;
-        unsigned long teacher_id_;
-        unsigned long room_id_;
-        unsigned long time_id_;
-        unsigned long year_;
+        int course_id_;
+        int teacher_id_;
+        int room_id_;
+        int time_id_;
+        int year_;
     };
 
 
@@ -44,26 +48,55 @@ namespace academia {
 
         Schedule(std::vector<SchedulingItem> init) : schedule_item{init}{}
 
-        void InsertScheduleItem(SchedulingItem k) {schedule_item.emplace_back(k);}
-
+        void InsertScheduleItem(const SchedulingItem &k) {schedule_item.emplace_back(k);}
         Schedule OfTeacher(int teacherid) const;
-
-        Schedule OfRoom(int room) const;
-
-        Schedule OfYear(int room) const;
-
-        std::vector<int> AvailableTimeSlots(int room);
-
+        Schedule OfRoom(int room_id) const;
+        Schedule OfYear(int year_id) const;
+        std::vector<int> AvailableTimeSlots(int room) const;
         size_t Size() const {return schedule_item.size();}
 
-
-        SchedulingItem operator[](const int &number) const {
-            return schedule_item[number];
-        }
+        SchedulingItem operator[](const int &number) const { return schedule_item[number]; }
 
     private:
         std::vector<SchedulingItem> schedule_item;
     };
 
+    class Scheduler {
+    public:
+        virtual Schedule PrepareNewSchedule(const std::vector<int> &rooms,
+                                    const std::map<int, std::vector<int>> &teacher_courses_assignment,
+                                    const std::map<int, std::set<int>> &courses_of_year,
+                                    int n_time_slots) = 0;
+    };
+
+    class GreedyScheduler : public Scheduler {
+    public:
+        GreedyScheduler() {}
+
+        Schedule PrepareNewSchedule(const std::vector<int> &rooms,
+                                    const std::map<int, std::vector<int>> &teacher_courses_assignment,
+                                    const std::map<int, std::set<int>> &courses_of_year,
+                                    int n_time_slots) override;
+
+        void FillTimeSlots(std::map<int,std::set<int>> &avaiable_rooms_in_time,
+                           const std::vector<int> &rooms,int n_time_slots) const;
+        void CreateBusyTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment,int n_time_slots);
+
+        int GetTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment, int course) const;
+
+        std::pair<int,int> FindRoomAndTimeSlot( std::map<int, std::set<int>> avaiable_rooms_int_time,
+                                                            int teacher_id) const;
+
+        bool CheckIsTeacherFree(int teacher_id, int time);
+
+
+    private:
+        std::map<int,std::vector<bool>> busy_teacher;
+    };
+
+    class NoViableSolutionFound {
+    public:
+        NoViableSolutionFound() {}
+    };
 }
 #endif //JIMP_EXERCISES_SCHEDULER_H
