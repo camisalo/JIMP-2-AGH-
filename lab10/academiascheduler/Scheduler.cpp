@@ -102,17 +102,28 @@ namespace academia{
                             room_id = room;
                             error = false;
                         }
-
                     }
                 }
                 if (error) {
                     throw NoViableSolutionFound();
                 }
 
+
                 new_schedule.InsertScheduleItem({course_id,teacher_id,room_id,time_id,year});
             }
         }
-
+        for (auto checked_year : courses_of_year) {
+            for (int i = 0; i < new_schedule.OfYear(checked_year.first).Size(); ++i) {
+                for (int j = 0; j < new_schedule.OfYear(checked_year.first).Size(); ++j) {
+                    if (i != j && new_schedule.OfYear(checked_year.first)[i].RoomId() !=
+                                  new_schedule.OfYear(checked_year.first)[j].RoomId() &&
+                        new_schedule.OfYear(checked_year.first)[i].TimeSlot() ==
+                        new_schedule.OfYear(checked_year.first)[j].TimeSlot()) {
+                        throw NoViableSolutionFound();
+                    }
+                }
+            }
+        }
 
         return new_schedule;
     }
