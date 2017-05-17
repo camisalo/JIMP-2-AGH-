@@ -64,19 +64,30 @@ namespace academia{
 
         Schedule new_schedule;
         int course_id, teacher_id, room_id, time_id, year;
+        int ile;
 
 
 
 
-        for (auto &courses_year : courses_of_year){
-            year = courses_year.first;
-            for (auto course : courses_year.second){
-                course_id = course;
-                teacher_id = GetTeacher(teacher_courses_assignment,course);
+        for (auto &teacher : teacher_courses_assignment){
+            teacher_id = teacher.first;
+            for (auto course_teacher : teacher.second){
+                course_id = course_teacher;
+
+
+                const Schedule &teacher = new_schedule.OfTeacher(teacher_id);
+                ile = 0;
+                for (int i=0;i<teacher.Size();++i){
+                    if (course_id == teacher[i].CourseId()){
+                        ile++;
+                    }
+                }
+
+                year = GetYear(courses_of_year, course_id, ile);
 
                 bool ok, error = true;
 
-                const Schedule &teacher = new_schedule.OfTeacher(teacher_id);
+
                 for (auto room : rooms){
 
                     for (auto avaiable_time : new_schedule.OfRoom(room).AvailableTimeSlots(n_time_slots)){
@@ -120,11 +131,13 @@ namespace academia{
     }
 
 
-    int GreedyScheduler::GetTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment, int course) const {
-        for (auto teacher : teacher_courses_assignment){
-            for (auto search_course : teacher.second){
-                if (search_course == course)
-                    return teacher.first;
+    int GreedyScheduler::GetYear(const std::map<int, std::set<int>> &courses_of_year, int course, int ile) const {
+        int count = 0;
+        for (auto year : courses_of_year){
+            for (auto course_on_year : year.second){
+                if (course_on_year == course){
+                    return year.first;
+                }
             }
         }
         throw NoViableSolutionFound();

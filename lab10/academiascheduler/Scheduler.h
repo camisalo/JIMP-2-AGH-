@@ -82,7 +82,7 @@ namespace academia {
                            const std::vector<int> &rooms,int n_time_slots) const;
 
 
-        int GetTeacher(const std::map<int, std::vector<int>> teacher_courses_assignment, int course) const;
+        int GetYear(const std::map<int, std::set<int>> &courses_of_year, int course, int ile) const;
 
     };
 
