@@ -6,7 +6,7 @@ set(TEST_LAB_NUMBER 11)
 #######################################################################
 ##  TESTS
 #######################################################################
-add_gtest_with_memleak(factorymethod libfactorymethod)
+add_gtest_with_memleak(factory_method libfactorymethod)
 
 #######################################################################
 ##  ALL TESTS
