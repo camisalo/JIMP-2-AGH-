@@ -7,7 +7,8 @@
 using binary_tree::Tree;
 
 int main(void) {
-    Tree tree = Tree(6);
+    Tree<int> tree{1};
+
 
 
     return 1;
