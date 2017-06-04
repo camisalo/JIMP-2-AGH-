@@ -1,55 +1,58 @@
 //
-// Created by konrad on 25.05.17.
+// Created by konrad on 01.06.17.
 //
 
-#ifndef JIMP_EXERCISES_BINARY_TREE_H
-#define JIMP_EXERCISES_BINARY_TREE_H
+#ifndef JIMP_EXERCISES_TREE_H
+#define JIMP_EXERCISES_TREE_H
 
-#include <iostream>
+#include <memory>
 
-using namespace std;
-
-namespace binary_tree {
-
+namespace tree {
     template<class T>
     class Tree {
     public:
-        Tree(T key) : key_{key} {}
-
-        void AddNode(T key) {
-            bool ok = true;
-            if (childL_ == nullptr) {
-                childL_->SetKey(key);
-                ok = false;
-            } else if (childR_ == nullptr) {
-                childR_ = Tree{key};
-                ok = false;
-            }
-
-            if (ok) {
-                childL_->AddNode(key);
-            }
-
+        Tree(){}
+        Tree(T value) : value_{value}, size_{1}, depth_{1} {}
+        T Value(){return value_;}
+        int Size(){return size_;}
+        int Depth(){
+            if (this->size_ == 1) return 1;
+            else if (this->size_ <= 3) return 2;
+            else if (this->size_ <= 7) return 3;
         }
+        void Insert(T value){
+            this->size_++;
+            Tree *w, *p;
+            w = new Tree;
+            w->left = w->right = nullptr;
+            w->value_ = value;
 
-        void SetKey(T key) {
-            key_ = key;
-        }
-
-        void BFS() {
-            Tree root = this;
-            while (root.childL_ == nullptr || root.childR_ == nullptr) {
-                std::cout << childL_
+            p = this;
+            bool make = true;
+            while(make) {
+                if (value < p->value_)
+                {
+                    if (!p->left){
+                        p->left = w;
+                        make = false;
+                    } else p = p->left;
+                }
+                else {
+                    if (!p->right){
+                        p->right = w;
+                        make = false;
+                    } else p = p->right;
+                }
             }
+            delete p;
+
         }
 
     private:
-
-        T key_;
-        Tree *childL_ = nullptr;
-        Tree *childR_ = nullptr;
+        T value_;
+        int size_, depth_;
+        Tree *left= nullptr, *right= nullptr;
     };
-};
 
-
-#endif //JIMP_EXERCISES_BINARY_TREE_H
+}
+#endif //JIMP_EXERCISES_TREE_H
